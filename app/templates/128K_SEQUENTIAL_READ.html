@@ -1,0 +1,374 @@
+<!DOCTYPE html>
+<html>
+
+    <head>
+        <meta http-equiv="Content-Type" content="text/html; charset=gb2312">
+        <title>Starblaze Performance Demo</title>
+        <link rel='stylesheet' href=../static/stylesheets/device.css />
+        <script type="text/javascript" src="../static/js/jquery-1.10.2.js"></script>
+        <script type="text/javascript" src="../static/js/jscharts.js"></script>
+        <script type="text/javascript" src="../static/js/echarts.min.js"></script>
+    </head>
+
+    <body >
+
+        <div class="outer-main">
+            <div class="trail left"></div>
+            <div class="trail right"></div>
+            <div class="main">
+                <div class="welcomeTitle" style="background-color: #0e14cd;">
+                    <p style="background-color: #0e14cd;"></p>
+                    <label style="font-size:6rem;"> Starblaze Star1000 </label>
+                    <h1></h1>
+                </div>
+                <div >
+
+
+                <div style="margin:0.1rem 0 0 0; ">
+                    <table class="data-table">
+                        <tr class="data-title">
+                            <th  id="dataIOTypeLeft" align="right">128K</th>
+                            <th  id="dataIOTypeSecond">Sequential</th>
+                            <th  id="dataIOTypeThird" align="left">Read</th>
+                        </tr>
+                        <tr class="data-title">
+                            <th  id="dataOneTitle">BANDWIDTH</th>
+                            <th  id="dataTwoTitle">IOPS</th>
+                            <th  id="dataThreeTitle">LATENCY</th>
+                        </tr>
+                    </table>
+                </div>
+
+                <div style="position:absolute; left:1;  width: 33%; height:800px; background-color=#000000; " id ="histbw" ></div>
+                <div style="position:absolute; left:33%;  width: 34%; height:800px; background-color=#000000; " id ="histiops" ></div>
+                <div style="position:absolute; left:67% ; width: 33%; height:800px; background-color=#000000; " id ="histlat" ></div>
+            </dev>
+        </div>
+
+        <script type="text/javascript">
+            var chartbw = echarts.init(document.getElementById('histbw'));
+            var chartiops = echarts.init(document.getElementById('histiops'));
+            var chartlat = echarts.init(document.getElementById('histlat'));
+
+            optionbw = {
+                backgroundColor: '#1b1b1b',
+                tooltip : {
+                    formatter: "{a} <br/>{c} {b}"
+                },
+                toolbox: {
+                    show : false,
+                    feature : {
+                        mark : {show: true},
+                        restore : {show: true},
+                        saveAsImage : {show: true}
+                    }
+                },
+                series : [
+                    {
+                        name:'READ BANDWIDTH',
+                        type:'gauge',
+                        //center : ['25%', '55%'],
+                        radius : '80%',
+                        min:0,
+                        max:4000,
+                        endAngle:45,
+                        splitNumber:5,
+                        axisLine: {
+                            lineStyle: {
+                                color: [[0.29, 'lime'],[0.86, '#1e90ff'],[1, '#ff4500']],
+                                width: 2,
+                                shadowColor : '#fff',
+                                shadowBlur: 10
+                            }
+                        },
+                        axisLabel: {
+                            textStyle: {
+                                fontWeight: 'bolder',
+                                color: '#fff',
+                                shadowColor : '#fff',
+                                shadowBlur: 10
+                            }
+                        },
+                        axisTick: {
+                            length :12,
+                            lineStyle: {
+                                color: 'auto',
+                                shadowColor : '#fff',
+                                shadowBlur: 10
+                            }
+                        },
+                        splitLine: {
+                            length :20,
+                            lineStyle: {
+                                width:3,
+                                color: '#fff',
+                                shadowColor : '#fff',
+                                shadowBlur: 10
+                            }
+                        },
+                        pointer: {
+                            width:5,
+                            shadowColor : '#fff',
+                            shadowBlur: 5
+                        },
+                        title : {
+                            offsetCenter: [0, '-30%'],
+                            textStyle: {
+                                fontWeight: 'bolder',
+                                fontStyle: 'italic',
+                                color: '#fff',
+                                shadowColor : '#fff',
+                                shadowBlur: 10
+                            }
+                        },
+                        detail : {
+                            //backgroundColor: 'rgba(30,144,255,0.8)',
+                           // borderWidth: 1,
+                            borderColor: '#fff',
+                            shadowColor : '#fff',
+                            shadowBlur: 5,
+                            width: 80,
+                            height:30,
+                            offsetCenter: [25, '20%'],
+                            textStyle: {
+                                fontWeight: 'bolder',
+                                color: '#fff'
+                            }
+                        },
+                        data:[{value: 0, name: 'MB/s'}]
+                    }]
+            };
+
+            chartbw.setOption(optionbw);
+
+            optioniops = {
+                backgroundColor: '#1b1b1b',
+                tooltip : {
+                    formatter: "{a} <br/>{c} {b}"
+                },
+                toolbox: {
+                    show : false,
+                    feature : {
+                        mark : {show: true},
+                        restore : {show: true},
+                        saveAsImage : {show: true}
+                    }
+                },
+                series : [
+                    {
+                        name:'READ IOPS',
+                        type:'gauge',
+                        z: 3,
+                        min:0,
+                        max:990000,
+                        splitNumber:11,
+                        radius:'95%',
+                        axisLine: {
+                            lineStyle: {
+                                color: [[0.09, 'lime'],[0.82, '#1e90ff'],[1, '#ff4500']],
+                                width: 3,
+                                shadowColor : '#fff',
+                                shadowBlur: 10
+                            }
+                        },
+                        axisLabel: {
+                            textStyle: {
+                                fontWeight: 'bolder',
+                                color: '#fff',
+                                shadowColor : '#fff',
+                                shadowBlur: 10
+                            }
+                        },
+                        axisTick: {
+                            length :15,
+                            lineStyle: {
+                                color: 'auto',
+                                shadowColor : '#fff',
+                                shadowBlur: 10
+                            }
+                        },
+                        splitLine: {
+                            length :25,
+                            lineStyle: {
+                                width:3,
+                                color: '#fff',
+                                shadowColor : '#fff',
+                                shadowBlur: 10
+                            }
+                        },
+                        pointer: {
+                            shadowColor : '#fff',
+                            shadowBlur: 5
+                        },
+                        title : {
+                            textStyle: {
+                                fontWeight: 'bolder',
+                                fontSize: 30,
+                                fontStyle: 'italic',
+                                color: '#fff',
+                                shadowColor : '#fff',
+                                shadowBlur: 10
+                            }
+                        },
+                        detail : {
+                            //backgroundColor: 'rgba(30,144,255,0.8)',
+                            //borderWidth: 1,
+                            borderColor: '#fff',
+                            shadowColor : '#fff',
+                            shadowBlur: 5,
+                            offsetCenter: [0, '50%'],
+                            textStyle: {
+                                fontWeight: 'bolder',
+                                color: '#fff',
+                                fontSize: 40,
+                            }
+                        },
+                        data:[{value: 100000, name: 'IOPS'}]
+                    }]
+            };
+
+            chartiops.setOption(optioniops);
+
+            optionlat = {
+                backgroundColor: '#1b1b1b',
+                tooltip : {
+                    formatter: "{a} <br/>{c} {b}"
+                },
+                toolbox: {
+                    show : false,
+                    feature : {
+                        mark : {show: true},
+                        restore : {show: true},
+                        saveAsImage : {show: true}
+                    }
+                },
+                series : [
+                    {
+                        name:'READ Lantency',
+                        type:'gauge',
+                        //center : ['75%', '50%'],
+                        radius : '80%',
+                        min:0,
+                        max:10,
+                        endAngle:45,
+                        splitNumber:10,
+                        axisLine: {
+                            lineStyle: {
+                                color: [[0.29, 'lime'],[0.86, '#1e90ff'],[1, '#ff4500']],
+                                width: 2,
+                                shadowColor : '#fff',
+                                shadowBlur: 10
+                            }
+                        },
+                        axisLabel: {
+                            textStyle: {
+                                fontWeight: 'bolder',
+                                color: '#fff',
+                                shadowColor : '#fff',
+                                shadowBlur: 10
+                            }
+                        },
+                        axisTick: {
+                            length :12,
+                            lineStyle: {
+                                color: 'auto',
+                                shadowColor : '#fff',
+                                shadowBlur: 10
+                            }
+                        },
+                        splitLine: {
+                            length :20,
+                            lineStyle: {
+                                width:3,
+                                color: '#fff',
+                                shadowColor : '#fff',
+                                shadowBlur: 10
+                            }
+                        },
+                        pointer: {
+                            width:5,
+                            shadowColor : '#fff',
+                            shadowBlur: 5
+                        },
+                        title : {
+                            offsetCenter: [0, '-30%'],
+                            textStyle: {
+                                fontWeight: 'bolder',
+                                fontStyle: 'italic',
+                                color: '#fff',
+                                shadowColor : '#fff',
+                                shadowBlur: 10
+                            }
+                        },
+                        detail : {
+                            //backgroundColor: 'rgba(30,144,255,0.8)',
+                           // borderWidth: 1,
+                            borderColor: '#fff',
+                            shadowColor : '#fff',
+                            shadowBlur: 5,
+                            width: 80,
+                            height:30,
+                            offsetCenter: [25, '20%'],
+                            textStyle: {
+                                fontWeight: 'bolder',
+                                color: '#fff'
+                            }
+                        },
+                        data:[{value: 0, name: 'ms'}]
+                    }]
+            };
+
+            chartlat.setOption(optionlat);
+
+            window.onload=startHeartBeat;
+
+            var startTime=0;
+
+            function startHeartBeat(){
+
+                heartBeatInterval=2000;
+                beatTimer=window.setInterval(heartBeat,heartBeatInterval);
+
+            }
+            function heartBeat() {
+
+                $.ajax({
+                    type: "GET",
+                    url: "/api/v1/ssd/performance",
+                    dataType: "json",
+                    success: function (data) {
+                        startTime += 1;
+                        optionbw.series[0].data[0] = {value: data["read_bandwith"], name: 'MB/s'};
+                        if (startTime > 9999) {
+                            startTime = 0;
+                        }
+
+
+{#                        optioniops.series[0].data[startTime] = ([startTime, (data["read_iops"] / 1000).toFixed(1)]);#}
+                        optioniops.series[0].data[0] = {value: data["read_iops"], name: 'IOPS'};
+                        if (startTime > 9999) {
+                            startTime = 0;
+                        }
+
+{#                        optionlat.series[0].data[startTime] = ([startTime, data["read_lantency"]]);#}
+                        optionlat.series[0].data[0] = {value: data["read_lantency"], name: 'ms'};
+                        if (startTime > 9999) {
+                            startTime = 0;
+                        }
+
+
+{#                        document.getElementById("dataOne").innerHTML = (data["read_bandwith"]).toFixed(1) + "MB/s";#}
+{#                        document.getElementById("dataTwo").innerHTML = (data["read_iops"] / 1000).toFixed(1) + "K";#}
+{#                        document.getElementById("dataThree").innerHTML = data["read_lantency"] + "ms";#}
+                        chartbw.setOption(optionbw);
+                        chartiops.setOption(optioniops);
+                        chartlat.setOption(optionlat);
+                    }
+                });
+            }
+
+        </script>
+    </body>
+</html>
+
+
